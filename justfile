@@ -1,14 +1,19 @@
-# Format with Ruff (Check)
-format-check:
+run:
+    uv run src/bot.py
+
+lint:
+    uv run ruff check . --fix
+
+format:
+    uv run ruff format .
+
+ci-format:
     uv run ruff format --check .
 
-# Lint with Ruff (check only)
-lint:
+ci-lint:
     uv run ruff check .
 
-# Run tests with pytest
 test:
     uv run python -m pytest
 
-# Check if the CI pipeline would pass
-ci: format-check lint test
+ci: ci-format ci-lint test
