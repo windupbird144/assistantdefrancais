@@ -1,4 +1,4 @@
-name: Tests
+name: Default Pipeline
 
 on:
   push:
@@ -28,7 +28,7 @@ jobs:
           echo "$HOME/.local/bin" >> $GITHUB_PATH
       - name: Check formatting
         run: just format-check
-      - name: Check linting
+      - name: Lint
         run: just lint
       - name: Run tests
         run: just test
