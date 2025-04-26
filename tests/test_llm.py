@@ -2,7 +2,7 @@ import json
 from unittest.mock import patch
 from httpx import Response
 
-from src.llm import get_definition
+from assistant.llm import get_definition
 
 import pytest
 

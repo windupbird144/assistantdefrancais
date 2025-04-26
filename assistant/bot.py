@@ -1,8 +1,8 @@
 import discord
 from discord import app_commands
 
-from .llm import get_definition
-from .config import Config
+from assistant.llm import get_definition
+from assistant.config import Config
 
 
 class MyClient(discord.Client):
