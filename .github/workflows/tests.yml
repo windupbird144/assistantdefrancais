@@ -1,5 +1,12 @@
-name: Tests
-on: [push, pull_request]
+name: Default Pipeline
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
 
 jobs:
   test:
@@ -19,5 +26,9 @@ jobs:
         run: |
           curl -LsSf https://astral.sh/uv/install.sh | sh
           echo "$HOME/.local/bin" >> $GITHUB_PATH
+      - name: Check formatting
+        run: just format-check
+      - name: Lint
+        run: just lint
       - name: Run tests
         run: just test

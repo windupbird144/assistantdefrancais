@@ -1,10 +1,10 @@
-from os import environ
 import os
 import discord
 from discord import app_commands
 from dotenv import load_dotenv
 
 load_dotenv()
+
 
 class MyClient(discord.Client):
     def __init__(self):
@@ -17,7 +17,9 @@ class MyClient(discord.Client):
         self.tree.copy_global_to(guild=guild)
         await self.tree.sync(guild=guild)
 
+
 bot = MyClient()
+
 
 @bot.tree.command(name="definir", description="Obtenir la définition d'un mot")
 async def definir(interaction: discord.Interaction, mot: str):
@@ -26,9 +28,11 @@ async def definir(interaction: discord.Interaction, mot: str):
 
     await interaction.response.send_message(fake_llm_response)
 
+
 @bot.event
 async def on_ready():
     print(f"Logged in as {bot.user}")
+
 
 if __name__ == "__main__":
     bot.run(os.environ["DISCORD_TOKEN"])
