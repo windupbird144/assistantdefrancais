@@ -19,5 +19,9 @@ jobs:
         run: |
           curl -LsSf https://astral.sh/uv/install.sh | sh
           echo "$HOME/.local/bin" >> $GITHUB_PATH
+      - name: Check formatting
+        run: just format-check
+      - name: Check linting
+        run: just lint
       - name: Run tests
-        run: just ci
+        run: just test

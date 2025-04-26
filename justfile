@@ -11,10 +11,8 @@ lint:
 format:
     uv run ruff format .
 
-# Combined check (lint + format check)
-check:
-    just lint
-    uv run ruff format --check .  # Fails if formatting needed
+format-check:
+    uv run ruff format --check .
 
 # CI-ready command (test + check)
 ci: test check
