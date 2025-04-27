@@ -1,6 +1,7 @@
 run:
-    uv run src/bot.py
-
+    uv run assistant/bot.py
+run-otel:
+    opentelemetry-instrument --logs_exporter otlp --service_name assistantdefrancais uv run assistant/bot.py
 lint:
     uv run ruff check . --fix
 

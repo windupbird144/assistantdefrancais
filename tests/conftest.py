@@ -1,6 +1,8 @@
-import os
+from unittest.mock import patch
+import pytest
 
-os.environ.setdefault("OPENROUTER_API_KEY", "")
-os.environ.setdefault("OPENROUTER_API_URL", "")
-os.environ.setdefault("DISCORD_TOKEN", "")
-os.environ.setdefault("DISCORD_GUILD_ID", "-1")
+
+@pytest.fixture(scope="module", autouse=True)
+def setup_module():
+    with patch("assistantdefrancais.telemetry.setup_telemetry"):
+        yield
