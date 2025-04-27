@@ -20,6 +20,8 @@ jobs:
       - name: Deploy to EC2
         run: |
           ssh ${{ secrets.SSH_USER }}@${{ secrets.EC2_HOST }} "
+            set -e
+            
             # Create a deployment directory with timestamp
             DEPLOY_DIR=~/deployments/$(date +%Y%m%d_%H%M%S)
             mkdir -p \$DEPLOY_DIR
@@ -32,9 +34,14 @@ jobs:
             echo '${{ secrets.ENV_FILE }}' > .env
             
             # Deploy with Docker Compose
-            docker-compose down || true
+            docker-compose down -v || { echo 'docker-compose down failed, but continuing to try up'; }
             docker-compose pull
             docker-compose up -d
             
             echo 'Deployment completed successfully!'
           "
+          # Check the exit code of the SSH command
+          if [ $? -ne 0 ]; then
+            echo "SSH command failed!"
+            exit 1  # Fail the Gitlab job if the SSH command exited with a non-zero status
+          fi
