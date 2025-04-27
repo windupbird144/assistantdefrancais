@@ -10,6 +10,7 @@ from assistant.telemetry import setup_telemetry
 
 tracer = trace.get_tracer(__name__)
 
+
 class MyClient(discord.Client):
     def __init__(self):
         super().__init__(intents=discord.Intents.default())
