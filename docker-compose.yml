@@ -1,5 +1,5 @@
 services:
-  # Discord Bot Service
+  # Discord Bot Servicef
   discord-bot:
     build:
       context: .
