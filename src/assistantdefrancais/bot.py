@@ -67,6 +67,3 @@ async def definir(interaction: discord.Interaction, mot: str):
 @bot.event
 async def on_ready():
     print(f"Logged in as {bot.user}")
-
-def main():
-    bot.run(Config.DISCORD_TOKEN)

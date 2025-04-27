@@ -1,3 +1,6 @@
-from .bot import main
+from .bot import bot
+from .config import Config
 
-main()
+
+def main():
+    bot.run(Config.DISCORD_TOKEN)
