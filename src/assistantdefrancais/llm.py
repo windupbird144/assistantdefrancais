@@ -21,7 +21,14 @@ counter_invocations = meter.create_counter("llm.call.count")
 async def get_definition(word: str) -> str:
     start = time.perf_counter()
     model = Config.OPENROUTER_MODEL
-    prompt = f"Donne une définition concise du mot '{word}' en français. Réponds dans le format <mot>: <défitnition>. Réponds uniquement selon le format, sans commentaires supplémentaires."
+    prompt = f"""
+    Donne une définition complète et détaillée du mot '{word}' en français. Incluse le genre du nom (m. ou f.), la définition, et un exemple de phrase utilisant le mot. Utilise le format suivant : <mot> (<genre>) : <définition>.
+
+    Exemple :
+    maison (f.) : Bâtiment d’habitation ; construction faite pour être habitée.
+    Exemple : Ils ont acheté une nouvelle maison à la campagne.
+
+    Réponds uniquement selon ce format exact, sans commentaires supplémentaires, titres, ou tout autre texte."""
     llm_response = None
     with tracer.start_as_current_span("llm.get_definition") as span:
         span.set_attribute("llm.model", model)
