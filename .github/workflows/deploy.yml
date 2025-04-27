@@ -22,13 +22,20 @@ jobs:
           ssh ${{ secrets.SSH_USER }}@${{ secrets.EC2_HOST }} "
             set -ex
             
-            # Create a deployment directory with timestamp
-            DEPLOY_DIR=~/deployments/$(date +%Y%m%d_%H%M%S)
-            mkdir -p \$DEPLOY_DIR
-            cd \$DEPLOY_DIR
+            # Create a deployment directory
+            APP_DIR=~/deployments
+            mkdir -p \$APP_DIR
+            cd \$APP_DIR
             
-            # Clone the repository
-            git clone ${{ github.server_url }}/${{ github.repository }}.git .
+            echo 'Pulling latest code...'
+            # Use git fetch and reset or pull to update the existing repository
+            # This is more efficient than cloning every time
+            if [ -d .git ]; then
+              git fetch origin
+              git reset --hard origin/${{ github.ref_name }} # Resets to the state of the pushed branch
+            else
+              git clone ${{ github.server_url }}/${{ github.repository }}.git .
+            fi
             
             # Set up environment variables
             echo '${{ secrets.ENV_FILE }}' > .env
@@ -36,7 +43,7 @@ jobs:
             # Deploy with Docker Compose
             docker-compose down -v --remove-orphans || { echo 'docker-compose down failed, but continuing to try up'; }
             docker-compose pull
-            docker-compose up -d
+            docker-compose up -d --build
             
             echo 'Deployment completed successfully!'
           "
