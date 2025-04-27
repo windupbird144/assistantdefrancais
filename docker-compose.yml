@@ -30,8 +30,8 @@ services:
       - "4318:4318"    # OTLP HTTP
     environment:
       - COLLECTOR_OTLP_ENABLED=true
-      - SPA_STORAGE_TYPE=badger
-        - BADGER_EPHEMERAL=false # Set to false for persistence
+      - SPAN_STORAGE_TYPE=badger
+      - BADGER_EPHEMERAL=false # Set to false for persistence
       - BADGER_DIRECTORY_VALUE=/badger/data # Directory for values
       - BADGER_DIRECTORY_KEY=/badger/key # Directory for keys
     volumes:
