@@ -102,6 +102,7 @@ dependencies = [
     { name = "opentelemetry-exporter-otlp" },
     { name = "opentelemetry-exporter-otlp-proto-grpc" },
     { name = "opentelemetry-exporter-otlp-proto-http" },
+    { name = "opentelemetry-exporter-prometheus" },
     { name = "opentelemetry-instrumentation-aiohttp-client" },
     { name = "opentelemetry-instrumentation-aiohttp-server" },
     { name = "opentelemetry-instrumentation-asyncio" },
@@ -128,6 +129,7 @@ requires-dist = [
     { name = "opentelemetry-exporter-otlp", specifier = ">=1.32.1" },
     { name = "opentelemetry-exporter-otlp-proto-grpc", specifier = ">=1.32.1" },
     { name = "opentelemetry-exporter-otlp-proto-http", specifier = ">=1.32.1" },
+    { name = "opentelemetry-exporter-prometheus", specifier = ">=0.53b1" },
     { name = "opentelemetry-instrumentation-aiohttp-client", specifier = "==0.53b1" },
     { name = "opentelemetry-instrumentation-aiohttp-server", specifier = "==0.53b1" },
     { name = "opentelemetry-instrumentation-asyncio", specifier = "==0.53b1" },
@@ -588,6 +590,20 @@ wheels = [
 ]
 
 [[package]]
+name = "opentelemetry-exporter-prometheus"
+version = "0.53b1"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "opentelemetry-api" },
+    { name = "opentelemetry-sdk" },
+    { name = "prometheus-client" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/5d/e5/a1f2878c0a4f4d7a5ba677016d020afc2ebce24cea0d4984f129d60ee3ca/opentelemetry_exporter_prometheus-0.53b1.tar.gz", hash = "sha256:19657c9e38785d5e999110157ef3336e4f3f6c114af070e72ac24a8a30e5bcdd", size = 14952 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/7a/84/7a7aae8b2f4380b3d58c2351ffa2b3ff43cd5e78977e3c2db5da5947208a/opentelemetry_exporter_prometheus-0.53b1-py3-none-any.whl", hash = "sha256:0441174c0cde7529640dd96e5d73b16c06ba3a02b4411a9b4da784f4c892c643", size = 12951 },
+]
+
+[[package]]
 name = "opentelemetry-instrumentation"
 version = "0.53b1"
 source = { registry = "https://pypi.org/simple" }
@@ -815,6 +831,15 @@ source = { registry = "https://pypi.org/simple" }
 sdist = { url = "https://files.pythonhosted.org/packages/96/2d/02d4312c973c6050a18b314a5ad0b3210edb65a906f868e31c111dede4a6/pluggy-1.5.0.tar.gz", hash = "sha256:2cffa88e94fdc978c4c574f15f9e59b7f4201d439195c3715ca9e2486f1d0cf1", size = 67955 }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/88/5f/e351af9a41f866ac3f1fac4ca0613908d9a41741cfcf2228f4ad853b697d/pluggy-1.5.0-py3-none-any.whl", hash = "sha256:44e1ad92c8ca002de6377e165f3e0f1be63266ab4d554740532335b9d75ea669", size = 20556 },
+]
+
+[[package]]
+name = "prometheus-client"
+version = "0.21.1"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/62/14/7d0f567991f3a9af8d1cd4f619040c93b68f09a02b6d0b6ab1b2d1ded5fe/prometheus_client-0.21.1.tar.gz", hash = "sha256:252505a722ac04b0456be05c05f75f45d760c2911ffc45f2a06bcaed9f3ae3fb", size = 78551 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/ff/c2/ab7d37426c179ceb9aeb109a85cda8948bb269b7561a0be870cc656eefe4/prometheus_client-0.21.1-py3-none-any.whl", hash = "sha256:594b45c410d6f4f8888940fe80b5cc2521b305a1fafe1c58609ef715a001f301", size = 54682 },
 ]
 
 [[package]]
