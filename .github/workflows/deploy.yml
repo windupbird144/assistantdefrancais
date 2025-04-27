@@ -32,9 +32,9 @@ jobs:
             echo '${{ secrets.ENV_FILE }}' > .env
             
             # Deploy with Docker Compose
-            docker-compose down || true
-            docker-compose pull
-            docker-compose up -d
+            docker compose down || true
+            docker compose pull
+            docker compose up -d
             
             echo 'Deployment completed successfully!'
           "
