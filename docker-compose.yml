@@ -30,6 +30,13 @@ services:
       - "4318:4318"    # OTLP HTTP
     environment:
       - COLLECTOR_OTLP_ENABLED=true
+      - SPA_STORAGE_TYPE=badger
+        - BADGER_EPHEMERAL=false # Set to false for persistence
+      - BADGER_DIRECTORY_VALUE=/badger/data # Directory for values
+      - BADGER_DIRECTORY_KEY=/badger/key # Directory for keys
+    volumes:
+      - jaeger-badger-data:/badger # Mount the named volume to the Badger directory
+    restart: unless-stopped
     networks:
       - monitoring-network
 
@@ -79,3 +86,5 @@ networks:
 volumes:
   prometheus-data:
   grafana-data:
+  jaeger-badger-data:
+
