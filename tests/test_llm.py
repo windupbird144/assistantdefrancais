@@ -2,7 +2,7 @@ import json
 from unittest.mock import AsyncMock, patch
 from httpx import Response
 
-from assistant.llm import get_definition
+from src.llm import get_definition
 
 import pytest
 

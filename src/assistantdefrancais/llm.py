@@ -2,7 +2,7 @@ import asyncio
 import json
 import time
 import httpx
-from assistant.config import Config
+from .config import Config
 from opentelemetry import metrics
 from opentelemetry import trace
 

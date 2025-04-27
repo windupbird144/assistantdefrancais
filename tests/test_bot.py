@@ -1,5 +1,5 @@
 from unittest.mock import AsyncMock, patch
-from assistant.bot import definir
+from src.bot import definir
 import pytest
 
 

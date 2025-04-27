@@ -37,3 +37,10 @@ asyncio_default_fixture_loop_scope="session"
 filterwarnings = [
     "ignore:'audioop' is deprecated"
 ]
+
+[project.scripts]
+assistantdefrancais = "assistantdefrancais:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"

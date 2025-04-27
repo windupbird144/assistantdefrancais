@@ -2,12 +2,12 @@ import time
 import discord
 from discord import app_commands
 
-from assistant.llm import get_definition
-from assistant.config import Config
+from .llm import get_definition
+from .config import Config
 
 from opentelemetry import trace
 
-from assistant.telemetry import setup_telemetry
+from .telemetry import setup_telemetry
 
 
 from opentelemetry.metrics import get_meter
@@ -68,6 +68,5 @@ async def definir(interaction: discord.Interaction, mot: str):
 async def on_ready():
     print(f"Logged in as {bot.user}")
 
-
-if __name__ == "__main__":
+def main():
     bot.run(Config.DISCORD_TOKEN)
