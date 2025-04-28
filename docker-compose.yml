@@ -5,12 +5,11 @@ services:
       context: .
       dockerfile: Dockerfile
     container_name: assistantdefrancais
-    environment:
-      - DISCORD_TOKEN=${DISCORD_TOKEN}
-      - OPENROUTER_API_KEY=${OPENROUTER_API_KEY}
-      - OTEL_EXPORTER_OTLP_ENDPOINT=http://jaeger:4318
-      - OTEL_SERVICE_NAME=assistantdefrancais
-      - PROMETHEUS_ENDPOINT=http://prometheus:9090
+    env_file:
+      - path: .env.default
+        required: true
+      - path: .env
+        required: true
     volumes:
       - ./:/app
     networks:
