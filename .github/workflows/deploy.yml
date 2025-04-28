@@ -1,14 +1,15 @@
 name: Deploy to EC2
 
 on:
-  push:
-    branches:
-      - main
+  workflow_run:
+    workflows: [Run tests]
+    branches: [main, feature/cicd]
+    types: [completed]
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    needs: [test]
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -37,7 +38,7 @@ jobs:
               git fetch origin
               git reset --hard origin/${{ github.ref_name }} # Resets to the state of the pushed branch
             else
-              git clone ${{ github.server_url }}/${{ github.repository }}.git .
+              git clo2 ${{ github.server_url }}/${{ github.repository }}.git .
             fi
             
             # Set up environment variables
