@@ -48,7 +48,7 @@ services:
   prepare-data-dir:
     # Run this step as root so that we can change the directory owner.
     user: root
-    image: jaegertracing/all-in-one:latest
+    image: alpine:latest
     command: "/bin/sh -c 'mkdir -p /badger/data && touch /badger/data/.initialized && chown -R 10001:10001 /badger/data'"
     volumes:
       - jaeger-badger-data:/badger
