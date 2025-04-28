@@ -41,7 +41,7 @@ jobs:
             echo '${{ secrets.ENV_FILE }}' > .env
             
             # Deploy with Docker Compose
-            docker-compose down -v --remove-orphans || { echo 'docker-compose down failed, but continuing to try up'; }
+            docker-compose down || { echo 'docker-compose down failed, but continuing to try up'; }
             docker-compose pull
             docker-compose up -d --build
             
