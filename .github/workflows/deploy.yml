@@ -1,0 +1,55 @@
+name: Deploy to EC2
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    needs: [test]
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+    
+      - name: Configure SSH
+        run: |
+          mkdir -p ~/.ssh/
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          echo "${{ secrets.SSH_KNOWN_HOSTS }}" > ~/.ssh/known_hosts
+      
+      - name: Deploy to EC2
+        run: |
+          ssh ${{ secrets.SSH_USER }}@${{ secrets.EC2_HOST }} "
+            set -ex
+            
+            # Create a deployment directory
+            APP_DIR=~/deployments
+            mkdir -p \$APP_DIR
+            cd \$APP_DIR
+            
+            echo 'Pulling latest code...'
+            # Use git fetch and reset or pull to update the existing repository
+            # This is more efficient than cloning every time
+            if [ -d .git ]; then
+              git fetch origin
+              git reset --hard origin/${{ github.ref_name }} # Resets to the state of the pushed branch
+            else
+              git clone ${{ github.server_url }}/${{ github.repository }}.git .
+            fi
+            
+            # Set up environment variables
+            echo '${{ secrets.ENV_FILE }}' > .env
+            
+            # Deploy with Docker Compose
+            docker-compose down
+            docker-compose up -d --build
+            echo 'Deployment completed successfully!'
+          "
+          # Check the exit code of the SSH command
+          if [ $? -ne 0 ]; then
+            echo "SSH command failed!"
+            exit 1  # Fail the Gitlab job if the SSH command exited with a non-zero status
+          fi

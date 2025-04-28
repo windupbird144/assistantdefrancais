@@ -30,8 +30,28 @@ services:
       - "4318:4318"    # OTLP HTTP
     environment:
       - COLLECTOR_OTLP_ENABLED=true
+      - SPAN_STORAGE_TYPE=badger
+      - BADGER_EPHEMERAL=false # Set to false for persistence
+      - BADGER_DIRECTORY_VALUE=/badger/data/values # Directory for values
+      - BADGER_DIRECTORY_KEY=/badger/data/keys # Directory for keys
+    volumes:
+      - jaeger-badger-data:/badger # Mount the named volume to the Badger directory
+    restart: unless-stopped
     networks:
       - monitoring-network
+    depends_on:
+      prepare-data-dir:
+        condition: service_completed_successfully
+  
+  # Workaround for badger file permissions
+  # See https://github.com/jaegertracing/jaeger/blob/v1.67.0/internal/storage/v1/badger/docs/storage-file-non-root-permission.md
+  prepare-data-dir:
+    # Run this step as root so that we can change the directory owner.
+    user: root
+    image: alpine:latest
+    command: "/bin/sh -c 'mkdir -p /badger/data && touch /badger/data/.initialized && chown -R 10001:10001 /badger/data'"
+    volumes:
+      - jaeger-badger-data:/badger
 
   # Prometheus for metrics
   prometheus:
@@ -52,25 +72,16 @@ services:
       - monitoring-network
     restart: unless-stopped
 
-  # Optional: Grafana for dashboards
   grafana:
     image: grafana/grafana:latest
     container_name: grafana
+    restart: unless-stopped
     ports:
-      - "3000:3000"
-    environment:
-      - GF_SECURITY_ADMIN_USER=admin
-      - GF_SECURITY_ADMIN_PASSWORD=admin
-      - GF_USERS_ALLOW_SIGN_UP=false
+      - '3000:3000'
     volumes:
       - grafana-data:/var/lib/grafana
-      - ./grafana/provisioning:/etc/grafana/provisioning
-      - ./grafana/dashboards:/var/lib/grafana/dashboards
     networks:
       - monitoring-network
-    restart: unless-stopped
-    depends_on:
-      - prometheus
 
 networks:
   monitoring-network:
@@ -79,3 +90,5 @@ networks:
 volumes:
   prometheus-data:
   grafana-data:
+  jaeger-badger-data:
+
