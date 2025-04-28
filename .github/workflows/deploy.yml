@@ -3,8 +3,8 @@ name: Deploy to EC2
 on:
   workflow_run:
     workflows: [Run tests]
-    branches: [main, feature/cicd]
-    types: [completed]
+    types:
+      - completed
 
 jobs:
   deploy:
