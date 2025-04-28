@@ -1,11 +1,14 @@
 name: Deploy to EC2
 
-on: [push]
+on:
+  push:
+    branches:
+      - main
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    
+    needs: [test]
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
