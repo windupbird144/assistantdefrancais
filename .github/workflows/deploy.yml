@@ -41,10 +41,8 @@ jobs:
             echo '${{ secrets.ENV_FILE }}' > .env
             
             # Deploy with Docker Compose
-            docker-compose down || { echo 'docker-compose down failed, but continuing to try up'; }
-            docker-compose pull
+            docker-compose down
             docker-compose up -d --build
-            
             echo 'Deployment completed successfully!'
           "
           # Check the exit code of the SSH command
