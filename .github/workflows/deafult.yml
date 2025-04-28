@@ -1,0 +1,20 @@
+name: deafult
+on:
+  push:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: pytest
+        run: 'running pytest'
+  migrate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: migrate
+        run: 'running migration'
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: pytest
+        run: 'running deploy'
